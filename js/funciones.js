@@ -266,11 +266,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Crear botones de fechas dinámicamente
     const contenedorFechas=document.querySelector(".scroll-container");
-    const btnScrollDerecha=document.querySelector(".btnPrevio");
-    const btnScrollIzquierda=document.querySelector(".btnPosterior");
+    const btnScrollDerecha=document.querySelector(".btnPosterior");
+    const btnScrollIzquierda=document.querySelector(".btnPrevio");
     const scrollContainer=document.querySelector('.scroll-container');
-    btnScrollDerecha.addEventListener("click",()=>scrollContainer.scrollLeft-=200);
-    btnScrollIzquierda.addEventListener("click",()=>scrollContainer.scrollLeft+=200);
+    btnScrollDerecha.addEventListener("click",()=>{
+        scrollContainer.scrollLeft+=250;
+    });
+    btnScrollIzquierda.addEventListener("click", () => {
+        scrollContainer.scrollLeft-=250;
+    });
 
     /*Obtiene el contenedor de fechas*/
     let btns=[];
