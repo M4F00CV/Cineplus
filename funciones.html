@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CinePlus – Funciones</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">CinePlus</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Cartelera</a></li>
+          <li class="nav-item"><a class="nav-link active" href="funciones.html">Funciones</a></li>
+          <li class="nav-item"><a class="nav-link" href="carrito.html">Carrito</a></li>
+          <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="text-center my-4 space-betwen">
+    <h1>CinePlus</h1>
+    <h2>Funciones</h2>
+  </header>
+
+  <!-- Selectores de fecha y hora separados -->
+  <section class="container contenedor-fechas text-center">
+    <div class="row">
+      <div class="col-lg-9 d-flex align-items-center">
+        <button class="btnPrevio"> 
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+            <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1"/>
+          </svg>
+        </button>
+        <div class="scroll-container"><!--Fechas por recuadro/boton--></div>
+        <button class="btnPosterior me-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
+            <path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1"/>
+          </svg>
+        </button>
+      </div>
+      <div class="col-lg-3"><!--filtro de fehca especifca(actual)/horas-->
+        <div class="mb-5 mt-5"><!-- Selector de fecha -->
+          <label for="fecha" class="form-label">Seleccione la fecha</label>
+          <input type="date" id="fecha" class="form-control"/>
+        </div>
+        <div class="container"><!-- Selector hora -->
+          <label for="horaRange" class="form-label">Seleccione la hora</label>
+          <input type="range" id="horaRange" min="0" max="23" value="0" class="form-range">
+          <div class="row">
+            <span class="col text-start">0:00</span><span class="col text-end">23:00</span>
+          </div>
+          <small id="horaSeleccionada" class="text-muted float-end">Todas las horas</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenedor de películas -->
+  <div class="container">
+    <ul id="contenedorPeliculas" class="list-group"></ul>
+  </div>
+
+  <!-- Contenedor alertas  -->
+  <div class="container mt-3">
+    <div id="alertContainer"></div>
+  </div>
+
+  <!-- Modal para seleccionar boletos y asientos -->
+  <div class="modal fade" id="modalBoletos" tabindex="-1" aria-labelledby="modalBoletosLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalBoletosLabel">Selecciona tus boletos</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Info de película y función -->
+          <div id="infoPeliculaModal" class="mb-3"></div>
+
+          <!-- Mapa de asientos -->
+          <div id="mapaSeccion" class="mt-3" style="display:none;">
+            <h6>Seleccione sus asientos</h6>
+
+            <!--"Pantalla"-->
+             <div class="pantalla-container text-center mb-4">
+                <h5 class="fw-bold">Pantalla</h5>
+                  <hr class="pantalla-linea">
+            </div>
+
+            <div id="mapaAsientos" class="d-flex flex-wrap gap-2 justify-content-center"></div>
+            <button id="agregarCarrito" class="btn btn-success mt-3">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center py-3 mt-4">
+    <p>&copy; 2025 CinePlus - Todos los derechos reservados</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/funciones.js"></script>
+</body>
+</html>
