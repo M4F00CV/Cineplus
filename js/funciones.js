@@ -212,15 +212,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Permite seleccionar o deseleccionar un asiento
     function seleccionarAsiento(asiento) {
-      boletosSeleccionados+=1;
-      if (asiento.classList.contains("btn-primary")) {
-        asiento.classList.replace("btn-primary", "btn-outline-success");
-        asientosSeleccionados = asientosSeleccionados.filter(a => a !== asiento.textContent);
-      } else if (asiento.classList.contains("btn-outline-success") && asientosSeleccionados.length < boletosSeleccionados) {
+    const nombre = asiento.textContent;
+
+    if (asiento.classList.contains("btn-danger")) return; // Ocupado, no se puede seleccionar
+
+    if (asiento.classList.contains("btn-selected")) {
+        // Deseleccionar
+        asiento.classList.replace("btn-selected", "btn-outline-success");
+        asientosSeleccionados = asientosSeleccionados.filter(a => a !== nombre);
+    } else {
+        // Seleccionar
         asiento.classList.replace("btn-outline-success", "btn-selected");
-        asientosSeleccionados.push(asiento.textContent);
-      }
+        asientosSeleccionados.push(nombre);
     }
+}
 
     //Al hacer click en el botoón agregar Carrito
     agregarCarritoBtn.addEventListener("click",()=>{
@@ -242,9 +247,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const nuevosAsientos = asientosSeleccionados.filter(a => !existente.asientos.includes(a));
             existente.asientos.push(...nuevosAsientos);
             existente.cantidad = existente.asientos.length; // actualizar cantidad
-        } else {
-            // Crear ficha nueva
-            carrito.push({
+        } else { // Crear ficha nueva
+            carrito.push({ 
                 pelicula: peliculaSeleccionada.titulo,
                 idPelicula: peliculaSeleccionada.id,
                 funcion: funcionSeleccionada,
@@ -259,9 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
         asientosOcupados[peliculaSeleccionada.id][funcionSeleccionada].push(...asientosSeleccionados);
         // Guarda los asientos ocupados actualizados en localStorage
         localStorage.setItem("asientosOcupados",JSON.stringify(asientosOcupados));
-
         mostrarAlerta(`Se agregaron ${boletosSeleccionados} boletos de "${peliculaSeleccionada.titulo}" (${funcionSeleccionada}) con asientos: ${asientosSeleccionados.join(", ")}`);
-
         if(!document.getElementById("btnVerCarrito")){
             //Crear botón ver carrito
             const btnCarrito=document.createElement("a");
