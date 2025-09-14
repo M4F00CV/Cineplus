@@ -210,22 +210,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-  //Permite seleccionar o deseleccionar un asiento
+    //Permite seleccionar o deseleccionar un asiento
     function seleccionarAsiento(asiento) {
-    const nombre = asiento.textContent;
-
-    if (asiento.classList.contains("btn-danger")) return; // Ocupado, no se puede seleccionar
-
-    if (asiento.classList.contains("btn-selected")) {
-        // Deseleccionar
-        asiento.classList.replace("btn-selected", "btn-outline-success");
-        asientosSeleccionados = asientosSeleccionados.filter(a => a !== nombre);
-    } else {
-        // Seleccionar
-        asiento.classList.replace("btn-outline-success", "btn-selected");
-        asientosSeleccionados.push(nombre);
+        console.log("Clic en asiento:", asiento.textContent, asiento.className);
+        if (asiento.classList.contains("btn-danger")) return;
+    
+        if (asiento.classList.contains("btn-selected")) {
+            asiento.classList.replace("btn-selected", "btn-outline-success");
+        } else {
+            asiento.classList.replace("btn-outline-success", "btn-selected");
+        }
+        console.log("Nueva clase:", asiento.className);
     }
-}
 
     //Al hacer click en el botoón agregar Carrito
     agregarCarritoBtn.addEventListener("click",()=>{
