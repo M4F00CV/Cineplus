@@ -415,6 +415,40 @@ header h2::after {
   text-align: center;
   padding: 50%;
 }
+.btn-selected {
+    background-color: #007BFF; /* azul base */
+    color: white;
+    border: 1px solid #0056b3; /* borde azul oscuro */
+    border-radius: 20px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin: 0.2rem;
+}
+.btn-selected:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4); /* sombra azul translúcida */
+    background: linear-gradient(135deg, #3399FF 0%, #0056b3 100%); /* degradado azul */
+    border-color: #003f7f; /* azul más oscuro */
+}
+
+.btn-selected::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+.btn-selected:hover::before {
+    left: 100%;
+}
 /* Efecto de brillo en botones */
 .btn::before {
   content: '';

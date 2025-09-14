@@ -22,8 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Mon":"Lunes","Tue":"Martes","Wed":"Miércoles",
         "Thu":"Jueves","Fri":"Viernes","Sat":"Sábado","Sun":"Domingo"
     };
-
-    fechaSelecionada = fechaSelecionada.toDateString().replace(/\b(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b/g, match => mapa[match]);
+    fechaSelecionada = toDateInputValue(new Date());
     let asientosOcupados = JSON.parse(localStorage.getItem('asientosOcupados')) || {};
 
     // Fecha actual y máximo 7 días
@@ -218,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         asiento.classList.replace("btn-primary", "btn-outline-success");
         asientosSeleccionados = asientosSeleccionados.filter(a => a !== asiento.textContent);
       } else if (asiento.classList.contains("btn-outline-success") && asientosSeleccionados.length < boletosSeleccionados) {
-        asiento.classList.replace("btn-outline-success", "btn-primary");
+        asiento.classList.replace("btn-outline-success", "btn-selected");
         asientosSeleccionados.push(asiento.textContent);
       }
     }
@@ -231,16 +230,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         // Obtiene el carrito actual desde localStorage; si no existe, se inicializa como un arreglo vacío
         const carrito=JSON.parse(localStorage.getItem("carrito"))||[];
-      //Agrega la compra actual al carrito
-        carrito.push({
-            pelicula: peliculaSeleccionada.titulo,
-            idPelicula: peliculaSeleccionada.id,
-            funcion: funcionSeleccionada,
-            asientos:[...asientosSeleccionados],
-            cantidad: boletosSeleccionados,
-            fechaSelecionada
-        });
-
+        //Agrega la compra actual al carrito
+        // Buscar si ya existe una ficha con misma película, función y fecha
+        const existente = carrito.find(boleto =>
+            boleto.idPelicula === peliculaSeleccionada.id &&
+            boleto.funcion === funcionSeleccionada &&
+            boleto.fechaSelecionada === fechaSelecionada
+        );
+        if (existente) {
+            // Evitar duplicar asientos, solo agregar los nuevos
+            const nuevosAsientos = asientosSeleccionados.filter(a => !existente.asientos.includes(a));
+            existente.asientos.push(...nuevosAsientos);
+            existente.cantidad = existente.asientos.length; // actualizar cantidad
+        } else {
+            // Crear ficha nueva
+            carrito.push({
+                pelicula: peliculaSeleccionada.titulo,
+                idPelicula: peliculaSeleccionada.id,
+                funcion: funcionSeleccionada,
+                asientos:[...asientosSeleccionados],
+                cantidad: asientosSeleccionados.length,
+                fechaSelecionada
+            });
+        }
         // Guarda el carrito actualizado en localStorage
         localStorage.setItem("carrito",JSON.stringify(carrito));
         // Actualiza los asientos ocupados para la película y función correspondiente
