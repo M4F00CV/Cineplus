@@ -69,9 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
         peliculas = peliculasSimples.map(peli=>{
             const horariosPorFecha = {};
             for(let i=0;i<=maxDias;i++){
-                const fecha = new Date();
-                fecha.setDate(hoy.getDate()+i);
-                const fechaStr = toDateInputValue(fecha);  // <-- usar local
+                const fecha = sumarDias(hoy, i);
+                const fechaStr = toDateInputValue(fecha);
                 horariosPorFecha[fechaStr] = generarHorariosDia();
             }
             return {...peli, horarios: horariosPorFecha};
@@ -290,8 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let btns=[];
     const fechaActual=new Date();
     for(let i=0;i<=maxDias;i++){
-        const fecha = new Date();
-        fecha.setDate(fechaActual.getDate()+i);
+        const fecha = sumarDias(hoy, i);
         const fechaStr = toDateInputValue(fecha);
         let fechaLegible = fecha.toDateString().replace(/\b(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b/g,m=>mapa[m]);
 
@@ -318,6 +316,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         contenedorFechas.appendChild(btn);
         btns.push(btn);
+    }
+    function sumarDias(fecha, dias) {
+        const nuevaFecha = new Date(fecha); // clona la fecha
+        nuevaFecha.setDate(nuevaFecha.getDate() + dias);
+        return nuevaFecha;
     }
 
     fechaInput.addEventListener("change",()=>{
