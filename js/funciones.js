@@ -32,7 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
     fechaInput.value = toDateInputValue(hoy);
     fechaInput.min = toDateInputValue(hoy);
     fechaInput.max = toDateInputValue(max);
-
+    //Funcion para generar dias de manera correcta
+    function sumarDias(fecha, dias) {
+        const nuevaFecha = new Date(fecha); // clona la fecha
+        nuevaFecha.setDate(nuevaFecha.getDate() + dias);
+        return nuevaFecha;
+    }
     // Función para generar horarios aleatorios
     function generarHorariosDia() {
         const cantidad = Math.floor(Math.random()*3)+2; // 2 a 4 horarios
@@ -316,11 +321,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         contenedorFechas.appendChild(btn);
         btns.push(btn);
-    }
-    function sumarDias(fecha, dias) {
-        const nuevaFecha = new Date(fecha); // clona la fecha
-        nuevaFecha.setDate(nuevaFecha.getDate() + dias);
-        return nuevaFecha;
     }
 
     fechaInput.addEventListener("change",()=>{
