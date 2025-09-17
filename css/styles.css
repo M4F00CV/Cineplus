@@ -896,3 +896,19 @@ h4 svg {
   max-width: 600px;    
   margin-top: 5px;
 }
+/* Responsividad en el mapa de asientos*/
+#mapaAsientos{
+  display:grid;
+  grid-template-columns: repeat(8,minmax(40px,1fr));
+  gap: 8px;
+  justify-content:center;
+  max-width:440px;
+  margin:0 auto;
+}
+
+#mapaAsientos button{
+  width:100%;
+  aspect-ratio:5/4;
+  font-size:0.rem;
+  padding:0;
+}
