@@ -147,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const horaActual=new Date().getHours();
     horaRange.value=horaActual;
     horaSeleccionadaText.textContent=`Desde las ${horaActual}:00`;
+    actualizarHoraMinima();
     mostrarPeliculas(horaActual, toDateInputValue(new Date()));
 
     // Evento cambio barra hora
