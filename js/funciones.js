@@ -316,6 +316,9 @@ document.addEventListener("DOMContentLoaded", () => {
             btns.forEach(b=>b.classList.remove("activo"));
             btn.classList.add("activo");
             fechaSelecionada=fechaStr;
+            
+            actualizarHoraMinima();
+
             const horaActual=new Date().getHours();
             if(i===0){ // si es hoy
                 horaRange.value=horaActual;
@@ -342,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //obtener la fecha del input 
         const fechaStr = fechaInput.value; 
         fechaSelecionada = fechaStr;
-
+        actualizarHoraMinima();
         //control de fecha puesta en el calendario
         if(fechaStr===hoyStr){ // si es hoy
             horaRange.value=horaActual;
@@ -365,6 +368,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const offset = date.getTimezoneOffset(); // minutos de desfase
         const localDate = new Date(date.getTime() - offset * 60 * 1000);
     return localDate.toISOString().split("T")[0];
+}
+
+    function actualizarHoraMinima() {
+    const horaActual = new Date().getHours();
+    const hoyStr = toDateInputValue(new Date());
+
+    if (fechaSelecionada === hoyStr) { 
+        horaRange.min = horaActual;
+        if (horaRange.value < horaActual) {
+            horaRange.value = horaActual;
+            horaSeleccionadaText.textContent = `Desde las ${horaActual}:00`;
+        }
+    } else { 
+        horaRange.min = 0;
+    }
 }
 
 });
